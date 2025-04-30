@@ -1,0 +1,26 @@
+name: Notify Discord on Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get release body
+        id: get_release
+        run: |
+          RELEASE_BODY="${{ github.event.release.body }}"
+          echo "RELEASE_BODY<<EOF" >> $GITHUB_ENV
+          echo "$RELEASE_BODY" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Send release notes to Discord
+        run: |
+          ESCAPED_BODY=$(jq -Rn --arg str "$RELEASE_BODY" '{"content": $str}')
+          curl -X POST -H "Content-Type: application/json" \
+            -d "$ESCAPED_BODY" \
+            ${{ secrets.DISCORD_WEBHOOK_URL }}
+        env:
+          RELEASE_BODY: ${{ env.RELEASE_BODY }}
