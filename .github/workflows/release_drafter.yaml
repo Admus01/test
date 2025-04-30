@@ -45,8 +45,8 @@ jobs:
           commitish: main # default branch
 
 
-- name: Send changelog to Discord
-  run: |
-    curl -X POST -H "Content-Type: application/json" \
-      -d "{\"content\": \"$(cat changelog.md | jq -Rs .)\"}" \
-      ${{ secrets.DISCORD_WEBHOOK_URL }}
+      - name: Send changelog to Discord
+        run: |
+          curl -X POST -H "Content-Type: application/json" \
+            -d "{\"content\": \"$(cat changelog.md | jq -Rs .)\"}" \
+            ${{ secrets.DISCORD_WEBHOOK_URL }}
