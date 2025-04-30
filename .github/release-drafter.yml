@@ -2,7 +2,6 @@
 name-template: 'v$NEXT_PATCH_VERSION 🌈'
 tag-template: 'v$NEXT_PATCH_VERSION'
 target-branch: main
-target_commitish: ${{ github.event.pull_request.base.ref || 'main' }}
 categories:
   - title: '🚀 Features'
     labels:
