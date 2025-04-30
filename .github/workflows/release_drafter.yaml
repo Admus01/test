@@ -45,8 +45,10 @@ jobs:
           commitish: main # default branch
 
 
-      - name: Send changelog to Discord
+      - name: Send release notes to Discord
         run: |
           curl -X POST -H "Content-Type: application/json" \
-            -d "{\"content\": \"$(cat changelog.md | jq -Rs .)\"}" \
+            -d "{\"content\": $RELEASE_BODY}" \
             ${{ secrets.DISCORD_WEBHOOK_URL }}
+        env:
+          RELEASE_BODY: ${{ steps.release.outputs.body }}
