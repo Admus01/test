@@ -3,3 +3,4 @@ b = int(input("Enter another number: "))
 
 print(a + b)
 
+print(a - b)
